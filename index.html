@@ -1,0 +1,236 @@
+html
+html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>For You ❤️</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial;
+            overflow: hidden;
+
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url("bg.jpg");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* CARD */
+
+        #main-card {
+            background: white;
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: #ff4d6d;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        #yes-btn {
+            background: #ff4d6d;
+            color: white;
+        }
+
+        #no-btn {
+            background: #ddd;
+            position: absolute;
+        }
+
+        /* FINAL HEART */
+
+        #final-heart {
+            display: none;
+            position: fixed;
+            font-size: 150px;
+            color: #ff4d6d;
+            animation: pulse 1s infinite;
+            z-index: 50;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* LOVE QUOTE */
+
+        #love-quote {
+            display: none;
+            position: fixed;
+            top: 70%;
+            font-size: 28px;
+            color: white;
+            text-align: center;
+            max-width: 80%;
+            font-weight: bold;
+            animation: fadeIn 2s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* FLOWERS */
+
+        .flower {
+            position: fixed;
+            top: -10vh;
+            font-size: 30px;
+            animation: flowerFall linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes flowerFall {
+
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="main-card">
+
+        <h1>Will you be my GF? ❤️</h1>
+
+        <button id="yes-btn" onclick="startCelebration()">YES</button>
+        <button id="no-btn" onmouseover="moveNoButton()">NO</button>
+
+    </div>
+
+    <div id="final-heart">❤️</div>
+
+    <div id="love-quote">
+        "I love you so much Nikita,thankyou so much for accepting my proposal .I love you forever my jaan..."
+    </div>
+
+    <!-- AUDIO FILE -->
+
+    <audio id="loveSong">
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+
+        const noBtn = document.getElementById("no-btn");
+        const finalHeart = document.getElementById("final-heart");
+        const quote = document.getElementById("love-quote");
+        const song = document.getElementById("loveSong");
+
+        /* NO BUTTON RUN */
+
+        function moveNoButton() {
+
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+
+            noBtn.style.left = x + "px";
+            noBtn.style.top = y + "px";
+
+        }
+
+        /* START CELEBRATION */
+
+        function startCelebration() {
+
+            document.getElementById("main-card").style.display = "none";
+
+            finalHeart.style.display = "block";
+            quote.style.display = "block";
+
+            /* PLAY MUSIC */
+
+            song.play();
+
+            /* FLOWER RAIN */
+
+            startFlowerRain();
+
+        }
+
+        /* FLOWER RAIN */
+
+        function startFlowerRain() {
+
+            const flowers = [
+                "🌸", "🌺", "🌼", "🌷", "💮", "🌹", "🥀", "💐", "🌻", "🌷",
+                "🌼", "🌸", "🌺", "🌹", "🌻", "🌷", "🌸", "🌼"
+            ];
+
+            setInterval(() => {
+
+                const flower = document.createElement("div");
+
+                flower.className = "flower";
+
+                flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+
+                flower.style.left = Math.random() * 100 + "vw";
+
+                flower.style.animationDuration = (Math.random() * 3 + 3) + "s";
+
+                document.body.appendChild(flower);
+
+                setTimeout(() => {
+                    flower.remove();
+                }, 6000);
+
+            }, 120);
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+```
