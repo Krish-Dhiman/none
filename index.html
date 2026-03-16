@@ -1,236 +1,211 @@
-html
-html
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>For You ❤️</title>
+<title>For You ❤️</title>
 
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial;
-            overflow: hidden;
+<style>
 
-            background:
-                linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-                url("bg.jpg");
+body{
+background:black;
+color:white;
+text-align:center;
+font-family:Arial;
+overflow:hidden;
+}
 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+button{
+padding:15px 30px;
+font-size:20px;
+margin:20px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
 
-        /* CARD */
+#yes{
+background:red;
+color:white;
+}
 
-        #main-card {
-            background: white;
-            padding: 50px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
+#no{
+background:gray;
+color:white;
+position:absolute;
+}
 
-        h1 {
-            color: #ff4d6d;
-        }
+.slideshow{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+}
 
-        button {
-            padding: 15px 30px;
-            font-size: 18px;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            margin: 10px;
-        }
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+display:none;
+}
 
-        #yes-btn {
-            background: #ff4d6d;
-            color: white;
-        }
+#main{
+display:none;
+margin-top:50px;
+}
 
-        #no-btn {
-            background: #ddd;
-            position: absolute;
-        }
+</style>
 
-        /* FINAL HEART */
-
-        #final-heart {
-            display: none;
-            position: fixed;
-            font-size: 150px;
-            color: #ff4d6d;
-            animation: pulse 1s infinite;
-            z-index: 50;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.2);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* LOVE QUOTE */
-
-        #love-quote {
-            display: none;
-            position: fixed;
-            top: 70%;
-            font-size: 28px;
-            color: white;
-            text-align: center;
-            max-width: 80%;
-            font-weight: bold;
-            animation: fadeIn 2s;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* FLOWERS */
-
-        .flower {
-            position: fixed;
-            top: -10vh;
-            font-size: 30px;
-            animation: flowerFall linear forwards;
-            pointer-events: none;
-        }
-
-        @keyframes flowerFall {
-
-            0% {
-                transform: translateY(-10vh) rotate(0deg);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(110vh) rotate(360deg);
-                opacity: 0;
-            }
-
-        }
-    </style>
 </head>
 
 <body>
 
-    <div id="main-card">
+<div id="start">
 
-        <h1>Will you be my GF? ❤️</h1>
+<h1>I made something special for you ❤️</h1>
 
-        <button id="yes-btn" onclick="startCelebration()">YES</button>
-        <button id="no-btn" onmouseover="moveNoButton()">NO</button>
+<button onclick="start()">Click to open</button>
 
-    </div>
+</div>
 
-    <div id="final-heart">❤️</div>
+<div id="main">
 
-    <div id="love-quote">
-        "Always keep smiling, because life is a beautiful thing and there's so much to smile about." - Marilyn Monroe
-    </div>
+<h1 id="typing"></h1>
 
-    <!-- AUDIO FILE -->
+<div class="slideshow">
 
-    <audio id="loveSong">
-        <source src="song.mp3" type="audio/mpeg">
-    </audio>
+<img class="slide" src="one.jpg">
+<img class="slide" src="two.jpg">
+<img class="slide" src="three.jpg">
+<img class="slide" src="four.jpg">
 
-    <script>
+</div>
 
-        const noBtn = document.getElementById("no-btn");
-        const finalHeart = document.getElementById("final-heart");
-        const quote = document.getElementById("love-quote");
-        const song = document.getElementById("loveSong");
+<br>
 
-        /* NO BUTTON RUN */
+<audio id="music" controls loop>
+<source src="song.mp3" type="audio/mpeg">
+</audio>
 
-        function moveNoButton() {
+<br><br>
 
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 50);
+<h2>Will you be mine? ❤️</h2>
 
-            noBtn.style.left = x + "px";
-            noBtn.style.top = y + "px";
+<button id="yes" onclick="yes()">Yes ❤️</button>
+<button id="no" onmouseover="move()">No 😅</button>
 
-        }
+</div>
 
-        /* START CELEBRATION */
+<script>
 
-        function startCelebration() {
+/* start screen */
 
-            document.getElementById("main-card").style.display = "none";
 
-            finalHeart.style.display = "block";
-            quote.style.display = "block";
+function start(){
+    document.getElementById("music").play();
+document.getElementById("start").style.display="none";
+document.getElementById("main").style.display="block";
 
-            /* PLAY MUSIC */
+type();
+showSlides();
 
-            song.play();
+}
 
-            /* FLOWER RAIN */
+/* typing message */
 
-            startFlowerRain();
+const text="I don't know what the future holds... but I know I want you in it ❤️";
 
-        }
+let i=0;
 
-        /* FLOWER RAIN */
+function type(){
 
-        function startFlowerRain() {
+if(i<text.length){
 
-            const flowers = [
-                "🌸", "🌺", "🌼", "🌷", "💮", "🌹", "🥀", "💐", "🌻", "🌷",
-                "🌼", "🌸", "🌺", "🌹", "🌻", "🌷", "🌸", "🌼"
-            ];
+document.getElementById("typing").innerHTML+=text.charAt(i);
 
-            setInterval(() => {
+i++;
 
-                const flower = document.createElement("div");
+setTimeout(type,80);
 
-                flower.className = "flower";
+}
 
-                flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+}
 
-                flower.style.left = Math.random() * 100 + "vw";
 
-                flower.style.animationDuration = (Math.random() * 3 + 3) + "s";
+/* slideshow */
 
-                document.body.appendChild(flower);
+let index=0;
 
-                setTimeout(() => {
-                    flower.remove();
-                }, 6000);
+function showSlides(){
 
-            }, 120);
+let slides=document.getElementsByClassName("slide");
 
-        }
+for(let i=0;i<slides.length;i++){
+slides[i].style.display="none";
+}
 
-    </script>
+index++;
+
+if(index>slides.length){
+index=1;
+}
+
+slides[index-1].style.display="block";
+
+setTimeout(showSlides,2000);
+
+}
+
+/* moving no button */
+
+function move(){
+
+const x=Math.random()*window.innerWidth;
+const y=Math.random()*window.innerHeight;
+
+const btn=document.getElementById("no");
+
+btn.style.left=x+"px";
+btn.style.top=y+"px";
+
+}
+
+/* yes button */
+
+function yes(){
+
+document.body.innerHTML = `
+<h1 style="color:pink;margin-top:200px;">
+Thankyou so much for taking interest in this mini work.YOU are the most beautiful person in the world ❤️
+</h1>
+<h2>Lets start a beautiful journey together 💕</h2>
+`;
+
+/* hearts rain */
+
+setInterval(()=>{
+
+const heart=document.createElement("div");
+
+heart.innerHTML="❤️";
+
+heart.style.position="fixed";
+heart.style.left=Math.random()*100+"vw";
+heart.style.top="-10px";
+heart.style.fontSize="30px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},4000);
+
+},200);
+
+}
+
+</script>
 
 </body>
-
 </html>
-```
